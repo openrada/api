@@ -6,8 +6,8 @@
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [ring-server "0.3.1"]
-                 [ring/ring-jetty-adapter "1.2.1"]
-                 [compojure "1.1.8"]
+                 [ring/ring-jetty-adapter "1.3.2"]
+                 [compojure "1.3.1"]
                  [liberator "0.12.2"]
                  [org.clojure/data.json "0.2.5"]]
   :target-path "target/%s")
