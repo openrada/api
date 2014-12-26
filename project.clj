@@ -1,5 +1,5 @@
 (defproject openrada.api "0.1.0-SNAPSHOT"
-  :description "API collection component"
+  :description "API component"
   :url "https://github.com/openrada/api"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
