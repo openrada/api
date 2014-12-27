@@ -7,20 +7,19 @@
 
 
 
-
 (defn to-json [data]
   (clojure.data.json/write-str data :escape-unicode false))
 
 (defroutes app
   (ANY "/" [] (resource))
-  (GET "/v1/parliament/:parliament/:convocation/members" [id] (resource
+  (GET "/v1/parliament/:convocation/members/:id" [convocation id] (resource
                            :available-media-types ["application/json"]
                            :handle-ok (fn [ctx]
                                         (to-json (db/get-member id)))))
-  (GET "/v1/parliament/:parliament/:convocation/members" [] (resource
+  (GET "/v1/parliament/:convocation/members" [convocation] (resource
                            :available-media-types ["application/json"]
                            :handle-ok (fn [ctx]
-                                        (to-json (db/get-members))))))
+                                        (to-json (db/get-members-from-convocation (read-string convocation)))))))
 
 (def handler
   (-> app
@@ -28,8 +27,4 @@
 
 
 
-(defn -main []
-  (let [port (Integer/parseInt (get (System/getenv) "PORT" "5000"))]
-    (jetty/run-jetty
-      handler
-      {:port port})))
+
