@@ -1,8 +1,8 @@
-(ns openrada.api
+(ns openrada.api.core
   (:require [liberator.core :refer [resource defresource]]
             [ring.middleware.params :refer [wrap-params]]
             [compojure.core :refer [defroutes ANY GET]]
-            ;[openrada.db :as db]
+            [openrada.db.core :as db]
             ))
 
 
@@ -25,3 +25,4 @@
 (def handler
   (-> app
       wrap-params))
+
