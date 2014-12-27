@@ -6,6 +6,7 @@
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [openrada.db "0.1.0-SNAPSHOT"]
+                 [openrada.collector "0.1.0-SNAPSHOT"]
                  [ring-server "0.3.1"]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [compojure "1.3.1"]

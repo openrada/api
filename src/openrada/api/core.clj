@@ -13,14 +13,14 @@
 
 (defroutes app
   (ANY "/" [] (resource))
-  (GET "/deputies/:id" [id] (resource
+  (GET "/v1/parliament/:parliament/:convocation/members" [id] (resource
                            :available-media-types ["application/json"]
                            :handle-ok (fn [ctx]
-                                        (to-json (db/get-deputy id)))))
-  (GET "/deputies" [] (resource
+                                        (to-json (db/get-member id)))))
+  (GET "/v1/parliament/:parliament/:convocation/members" [] (resource
                            :available-media-types ["application/json"]
                            :handle-ok (fn [ctx]
-                                        (to-json (db/get-deputies))))))
+                                        (to-json (db/get-members))))))
 
 (def handler
   (-> app
