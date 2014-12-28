@@ -11,7 +11,8 @@
                  [ring/ring-jetty-adapter "1.3.2"]
                  [compojure "1.3.1"]
                  [liberator "0.12.2"]
-                 [org.clojure/data.json "0.2.5"]]
+                 [org.clojure/data.json "0.2.5"]
+                 [cuerdas "0.1.0"]]
   :plugins [[lein-ring "0.8.10"]]
   :ring {:handler openrada.api.core/handler
          :init openrada.api.data/fetch-members-8-data}
