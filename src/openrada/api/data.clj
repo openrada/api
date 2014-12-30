@@ -23,4 +23,6 @@
         (db/save-members members-8)
         (map get-more-data-for-member (db/get-members-from-convocation 8))))))
 
-;(fetch-members-8-data)
+
+(defn init []
+  (fetch-members-8-data))
