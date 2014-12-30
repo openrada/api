@@ -22,10 +22,11 @@
        (resource
          :available-media-types ["application/json"]
          :handle-ok (fn [ctx]
-                      (to-json (db/get-members-from-convocation (str/parse-int convocation)))))))
+                      (to-json (db/get-members-from-convocation (read-string convocation)))))))
 
 (def handler
   (-> app
       wrap-params))
 
 
+(defn -main [port] (jetty/run-jetty handler {:port (Integer. port)}))
