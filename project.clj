@@ -14,8 +14,13 @@
                  [org.clojure/data.json "0.2.5"]
                  [cuerdas "0.1.0"]
                  [environ "1.0.0"]]
-  :plugins [[lein-ring "0.8.13"]
+  :plugins [[lein-environ "1.0.0"]
+            [lein-ring "0.8.13"]
             [com.palletops/uberimage "0.4.1"]]
+  :profiles {
+     :dev  {:env {
+              :rethinkdb-host "127.0.0.1"
+              :rethinkdb-port "28015"}}}
   :main openrada.api.core
   :uberjar {:aot :all}
   :jvm-opts ^:replace ["-server"]
