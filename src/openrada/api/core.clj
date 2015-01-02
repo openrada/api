@@ -9,7 +9,9 @@
             [environ.core :refer [env]]))
 
 
-
+(defn db-conf []
+  {:host (env :rethinkdb-port-28015-tcp-addr)
+   :port (read-string (env :rethinkdb-port-28015-tcp-port))})
 
 
 (defn to-json [data]
@@ -21,8 +23,7 @@
        (resource
          :available-media-types ["application/json"]
          :handle-ok (fn [ctx]
-                      (let [db-conn (db/make-connection {:host (env :rethinkdb-host)
-                                                         :port (read-string (env :rethinkdb-port))})]
+                      (let [db-conn (db/make-connection (db-conf))]
                         (to-json (db/get-member db-conn id))))))
 
 

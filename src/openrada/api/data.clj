@@ -4,8 +4,11 @@
             [environ.core :refer [env]]))
 
 
-(def db-conn (db/make-connection {:host (env :rethinkdb-host)
-                                  :port (read-string (env :rethinkdb-port))}))
+(defn db-conf []
+  {:host (env :rethinkdb-port-28015-tcp-addr)
+   :port (read-string (env :rethinkdb-port-28015-tcp-port))})
+
+(def db-conn (db/make-connection (db-conf)))
 
 (defn get-more-data-for-member [member]
   (println "getting more data for" member)

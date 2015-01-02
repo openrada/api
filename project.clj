@@ -18,8 +18,8 @@
             [lein-ring "0.8.13"]]
   :profiles {
      :dev  {:env {
-              :rethinkdb-host "127.0.0.1"
-              :rethinkdb-port "28015"}}}
+              :rethinkdb-port-28015-tcp-addr "127.0.0.1"
+              :rethinkdb-port-28015-tcp-port "28015"}}}
   :main openrada.api.core
   :aot [openrada.api.core]
   :jvm-opts ^:replace ["-server"]
