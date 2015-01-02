@@ -15,14 +15,13 @@
                  [cuerdas "0.1.0"]
                  [environ "1.0.0"]]
   :plugins [[lein-environ "1.0.0"]
-            [lein-ring "0.8.13"]
-            [com.palletops/uberimage "0.4.1"]]
+            [lein-ring "0.8.13"]]
   :profiles {
      :dev  {:env {
               :rethinkdb-host "127.0.0.1"
               :rethinkdb-port "28015"}}}
   :main openrada.api.core
-  :uberjar {:aot :all}
+  :aot [openrada.api.core]
   :jvm-opts ^:replace ["-server"]
   :ring {:handler openrada.api.core/handler
          :init openrada.api.data/init})
