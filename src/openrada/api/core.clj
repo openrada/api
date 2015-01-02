@@ -10,6 +10,8 @@
 
 
 (defn db-conf []
+  (println "host" (env :rethinkdb-port-28015-tcp-addr))
+  (println "port" (env :rethinkdb-port-28015-tcp-port))
   {:host (env :rethinkdb-port-28015-tcp-addr)
    :port (read-string (env :rethinkdb-port-28015-tcp-port))})
 
@@ -32,8 +34,7 @@
        (resource
          :available-media-types ["application/json"]
          :handle-ok (fn [ctx]
-                      (let [db-conn (db/make-connection {:host (env :rethinkdb-host)
-                                                         :port (read-string (env :rethinkdb-port))})]
+                      (let [db-conn (db/make-connection (db-conf))]
                         (to-json (db/get-members-from-convocation db-conn (read-string convocation))))))))
 
 (def handler
