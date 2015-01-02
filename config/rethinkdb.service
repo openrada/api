@@ -1,10 +1,16 @@
 [Unit]
 Description=RethinkDB
 After=docker.service
- 
+
 [Service]
 ExecStartPre=-/usr/bin/docker kill rethinkdb
 ExecStartPre=-/usr/bin/docker rm rethinkdb
+ExecStartPre=-/usr/bin/mkdir -p /home/core/docker-volumes/rethinkdb
 ExecStartPre=/usr/bin/docker pull dockerfile/rethinkdb
-ExecStart=/usr/bin/docker run --name rethinkdb -p 8080:8080 -p 28015:28015 -p 29015:29015 dockerfile/rethinkdb
+ExecStart=/bin/sh -c '/usr/bin/docker run --name rethinkdb   \
+    -p 100.73.134.136:8080:8080                      \
+    -p 100.73.134.136:28015:28015                    \
+    -p 100.73.134.136:29015:29015                    \
+    -v /home/core/docker-volumes/rethinkdb/:/data/           \
+    dockerfile/rethinkdb rethinkdb --bind all --canonical-address 100.73.134.136'
 ExecStop=/usr/bin/docker stop rethinkdb

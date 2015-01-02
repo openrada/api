@@ -10,10 +10,9 @@
 
 
 (defn db-conf []
-  (println "host" (env :rethinkdb-port-28015-tcp-addr))
-  (println "port" (env :rethinkdb-port-28015-tcp-port))
-  {:host (env :rethinkdb-port-28015-tcp-addr)
-   :port (read-string (env :rethinkdb-port-28015-tcp-port))})
+  (println "host" (env :rethinkdb-host))
+  {:host (env :rethinkdb-host)
+   :port 28015})
 
 
 (defn to-json [data]
