@@ -1,0 +1,10 @@
+[Unit]
+Description=Openrada API
+After=rethinkdb.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker kill openrada-api
+ExecStartPre=-/usr/bin/docker rm openrada-api
+ExecStartPre=/usr/bin/docker pull openrada/api
+ExecStart=/usr/bin/docker run --name openrada-api --link rethinkdb:rethinkdb -p 3000:3000 openrada/api
+ExecStop=/usr/bin/docker stop openrada-api
