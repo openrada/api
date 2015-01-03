@@ -5,8 +5,7 @@
 
 
 (defn db-conf []
-  {:host (env :rethinkdb-host)
-   :port 28015})
+  {:host (env :rethinkdb-host)})
 
 (def db-conn (db/make-connection (db-conf)))
 

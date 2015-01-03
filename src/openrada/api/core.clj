@@ -10,10 +10,10 @@
 
 
 (defn db-conf []
-  {:host (env :rethinkdb-host)
-   :port 28015})
+  (println "host" (env :rethinkdb-host))
+  {:host (env :rethinkdb-host)})
 
-
+(db/make-connection (db-conf))
 (defn to-json [data]
   (clojure.data.json/write-str data :escape-unicode false))
 
