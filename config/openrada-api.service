@@ -6,5 +6,5 @@ After=rethinkdb.service
 ExecStartPre=-/usr/bin/docker kill openrada-api
 ExecStartPre=-/usr/bin/docker rm openrada-api
 ExecStartPre=/usr/bin/docker pull openrada/api
-ExecStart=/usr/bin/docker run --name openrada-api -e "RETHINKDB_HOST=100.73.134.136" --link rethinkdb:rethinkdb -p 3000:3000 openrada/api
+ExecStart=/usr/bin/docker run --name openrada-api -e "RETHINKDB_HOST=100.73.134.136" -p 3000:3000 openrada/api
 ExecStop=/usr/bin/docker stop openrada-api

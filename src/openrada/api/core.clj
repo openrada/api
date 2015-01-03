@@ -10,7 +10,6 @@
 
 
 (defn db-conf []
-  (println "host" (env :rethinkdb-host))
   {:host (env :rethinkdb-host)
    :port 28015})
 
