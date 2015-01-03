@@ -5,6 +5,7 @@
             [compojure.core :refer [defroutes ANY GET]]
             [ring.adapter.jetty :refer [run-jetty]]
             [openrada.db.core :as db]
+            [openrada.api.data :as data]
             [cuerdas.core :as str]
             [environ.core :refer [env]]))
 
@@ -19,6 +20,7 @@
 
 (defroutes app
   (ANY "/" [] (resource))
+  (GET  "/v1/_seed" [] (data/init))
   (GET "/v1/parliament/:convocation/members/:id" [convocation id]
        (resource
          :available-media-types ["application/json"]
