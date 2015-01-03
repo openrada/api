@@ -23,6 +23,7 @@
   (GET  "/v1/_seed" [] (data/init))
   (GET "/v1/parliament/:convocation/members/:id" [convocation id]
        (resource
+         :available-charsets ["iso-8859-1"]
          :available-media-types ["application/json"]
          :handle-ok (fn [ctx]
                       (let [db-conn (db/make-connection (db-conf))]
@@ -32,6 +33,7 @@
 
   (GET "/v1/parliament/:convocation/members" [convocation]
        (resource
+         :available-charsets ["iso-8859-1"]
          :available-media-types ["application/json"]
          :handle-ok (fn [ctx]
                       (let [db-conn (db/make-connection (db-conf))]
