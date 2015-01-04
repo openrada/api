@@ -23,5 +23,4 @@
   :main openrada.api.core
   :aot [openrada.api.core]
   :jvm-opts ^:replace ["-server"]
-  :ring {:handler openrada.api.http/handler
-         :init openrada.api.data/init})
+  :ring {:handler openrada.api.http/handler})

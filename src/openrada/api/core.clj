@@ -1,10 +1,25 @@
 (ns openrada.api.core
   (:gen-class)
   (:require [com.stuartsierra.component :as component]
-            [openrada.api.http :refer [new-http-server]]))
+            [openrada.api.http :refer [new-http-server]]
+            [openrada.db.component :refer [new-database]]
+            [openrada.api.data :refer [new-datacollector]]
+            [environ.core :refer [env]]))
 
 
-(def http-server (new-http-server 3000))
+(defn rada-system [config-options]
+  (let [{:keys [rethinkdb-host port]} config-options]
+    (-> (component/system-map
+          :config-options config-options
+          :db (new-database rethinkdb-host)
+          :http (new-http-server port)
+          :data-collector (component/using
+             (new-datacollector)
+             {:database  :db}
+         )))))
+
+
+(def system (rada-system {:rethinkdb-host (env :rethinkdb-host) :port 3000}))
 
 (defn -main [& args]
-  (alter-var-root #'http-server component/start))
+  (alter-var-root #'system component/start))
