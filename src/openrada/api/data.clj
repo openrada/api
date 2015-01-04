@@ -16,10 +16,7 @@
 
 
 
-;(db/update-member "0194b04d-4496-41b4-8458-ff34705e66c2" (collector/parse-member "http://gapp.rada.gov.ua/mps/info/page/15818"))
-
 (defn seed-8-members []
-  (println "init")
   (let [db-conn (db/make-connection (db-conf))
         members-8 (db/get-members-from-convocation db-conn 8)]
     (println "members 8 found" (> (count members-8) 0))
@@ -33,4 +30,5 @@
 
 
 (defn init []
+  (println "init")
   (seed-8-members))

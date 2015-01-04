@@ -13,7 +13,8 @@
                  [liberator "0.12.2"]
                  [org.clojure/data.json "0.2.5"]
                  [cuerdas "0.1.0"]
-                 [environ "1.0.0"]]
+                 [environ "1.0.0"]
+                 [com.stuartsierra/component "0.2.2"]]
   :plugins [[lein-environ "1.0.0"]
             [lein-ring "0.8.13"]]
   :profiles {
@@ -22,5 +23,5 @@
   :main openrada.api.core
   :aot [openrada.api.core]
   :jvm-opts ^:replace ["-server"]
-  :ring {:handler openrada.api.core/handler
+  :ring {:handler openrada.api.http/handler
          :init openrada.api.data/init})
