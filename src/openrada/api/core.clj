@@ -12,11 +12,14 @@
     (-> (component/system-map
           :config-options config-options
           :db (new-database rethinkdb-host)
-          :http (new-http-server port)
+          :http (component/using
+             (new-http-server port)
+             {:database  :db}
+          )
           :data-collector (component/using
              (new-datacollector)
              {:database  :db}
-         )))))
+          )))))
 
 
 (def system (rada-system {:rethinkdb-host (env :rethinkdb-host) :port 3000}))
