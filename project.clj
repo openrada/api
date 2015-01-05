@@ -13,6 +13,7 @@
                  [liberator "0.12.2"]
                  [org.clojure/data.json "0.2.5"]
                  [cuerdas "0.1.0"]
+                 [buddy "0.2.3"]
                  [environ "1.0.0"]
                  [com.stuartsierra/component "0.2.2"]]
   :plugins [[lein-environ "1.0.0"]
