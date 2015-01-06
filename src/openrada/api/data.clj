@@ -19,7 +19,7 @@
   (let [members (db/get-members-from-convocation db convocation)]
     (println "members " convocation " found" (> (count members) 0))
     (if (= (count members) 0)
-      (let [members-8 (members-coll/parse-members-8)]
+      (let [members-8 (members-coll/parse-members 8)]
         (db/save-members db members-8)))))
 
 (defn update-members-with-bios [db convocation]
