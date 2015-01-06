@@ -15,6 +15,7 @@
                  [cuerdas "0.1.0"]
                  [buddy "0.2.3"]
                  [environ "1.0.0"]
+                 [ring-cors "0.1.6"]
                  [com.stuartsierra/component "0.2.2"]]
   :plugins [[lein-environ "1.0.0"]
             [lein-ring "0.8.13"]]

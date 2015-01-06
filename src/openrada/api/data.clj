@@ -1,16 +1,17 @@
 (ns openrada.api.data
   (:require [com.stuartsierra.component :as component]
             [openrada.db.core :as db]
-            [openrada.collector.core :as collector]
-            [openrada.collector.committees :as committees]))
+            [openrada.collector.members :as members-coll]
+            [openrada.collector.committees :as committees-coll]
+            [openrada.collector.factions :as factions-coll]))
 
 
 
 (defn get-more-data-for-member [db member]
   (println "getting more data for" member)
-  (let [full-data (collector/parse-member (:link member))]
-      (println "full data" full-data)
-      (db/update-member db (:id member) full-data)))
+  (let [full-data (members-coll/parse-member (:link member))]
+    (println "full data" full-data)
+    (db/update-member db (:id member) full-data)))
 
 
 
@@ -18,20 +19,19 @@
   (let [members (db/get-members-from-convocation db convocation)]
     (println "members " convocation " found" (> (count members) 0))
     (if (= (count members) 0)
-      (let [members-8 (collector/parse-members-8)]
+      (let [members-8 (members-coll/parse-members-8)]
         (db/save-members db members-8)))))
 
 (defn update-members-with-bios [db convocation]
   (let [members (db/get-members-from-convocation db convocation)]
-    (map (fn [member]
-             (get-more-data-for-member db member)) members)))
+    (doall (map #(get-more-data-for-member db %) members))))
 
 
 (defn seed-committees [db convocation]
   (let [committees (db/get-committees-from-convocation db convocation)]
     (println "committees " convocation " found" (> (count committees) 0))
     (if (= (count committees) 0)
-      (let [committees-8 (committees/parse-committees 8)]
+      (let [committees-8 (committees-coll/parse-committees 8)]
         (db/save-committees db committees-8)))))
 
 (defn update-members-with-committee [db convocation]
@@ -45,7 +45,7 @@
                     (db/update-member-by-full-name db (:member mem)
                                                    {
                                                     :committee_id (:id comm)
-                                                    :role (:role mem)
+                                                    :committee_role (:role mem)
                                                    })
 
                     ) (:members comm)))
@@ -54,17 +54,51 @@
     ))
 
 
+(defn seed-factions [db convocation]
+  (let [factions (db/get-factions-from-convocation db convocation)]
+    (println "factions " convocation " found" (> (count factions) 0))
+    (if (= (count factions) 0)
+      (let [factions-8 (factions-coll/parse-factions 8)]
+        (db/save-factions db factions-8)))))
+
+(defn update-members-with-faction [db convocation]
+  (let [factions (db/get-factions-from-convocation db convocation)]
+    (doall
+      (map (fn [comm]
+             (println "process faction" comm)
+             (doall
+                (map (fn [mem]
+                    (println "process faction member" mem)
+                    (db/update-member-by-full-name db (:member mem)
+                                                   {
+                                                    :faction_id (:id comm)
+                                                    :faction_role (:role mem)
+                                                   })
+
+                    ) (:members comm)))
+
+             ) factions))
+    ))
+
+
 (defn init [database]
   (println "init")
+  ; members
   (seed-members database 8)
   (update-members-with-bios database 8)
+  ; committees
   (seed-committees database 8)
   (update-members-with-committee database 8)
   (db/remove-field database "committees" "members")
+  ; factions
+  (seed-factions database 8)
+  (update-members-with-faction database 8)
+  (db/remove-field database "factions" "members")
   )
 ;(committees/parse-committees 8)
 
 ;(def db {:connection (db/make-connection "127.0.01")})
+;(db/remove-field db "factions" "members")
 ;(db/get-committees-from-convocation db 8)
 
 ;(update-members-with-committee db 8)
