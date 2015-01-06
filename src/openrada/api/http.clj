@@ -29,7 +29,7 @@
            (resource
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
-                            (to-json (db/get-member-full database id)))))
+                            (to-json (db/get-member-full database (read-string convocation) id)))))
 
 
       (GET "/v1/parliament/:convocation/members" [convocation]
@@ -43,7 +43,7 @@
            (resource
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
-                            (to-json (db/get-faction-full database id)))))
+                            (to-json (db/get-faction-full database (read-string convocation) id)))))
 
 
       (GET "/v1/parliament/:convocation/factions" [convocation]
@@ -56,7 +56,7 @@
            (resource
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
-                            (to-json (db/get-committee-full database id)))))
+                            (to-json (db/get-committee-full database (read-string convocation) id)))))
 
 
       (GET "/v1/parliament/:convocation/committees" [convocation]
@@ -69,7 +69,7 @@
     (def handler
       (-> app
           (wrap-cors :access-control-allow-origin #"https://api.openrada.com"
-                      :access-control-allow-methods [:get])
+                     :access-control-allow-methods [:get])
           wrap-params))
     (let [server (jetty/run-jetty handler {:port port :join? false})]
       (assoc component :server server)))
