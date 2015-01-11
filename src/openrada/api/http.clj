@@ -8,6 +8,7 @@
             [openrada.db.core :as db]
             [openrada.api.data :as data]
             [cuerdas.core :as str]
+            [clansi :refer [style]]
             [environ.core :refer [env]]))
 
 
@@ -21,7 +22,7 @@
 (defrecord HTTPServer [port database server]
   component/Lifecycle
   (start [component]
-    (println ";; Starting HTTP server")
+    (println (style ";; Starting HTTP server" :green))
 
     (defroutes app
       (ANY "/" [] (resource))
@@ -63,18 +64,24 @@
              :handle-ok (fn [ctx]
                             (to-json (db/get-member-full database (read-string convocation) id)))))
 
-      (GET "/v1/parliament/:convocation/factions/:id" [convocation id]
-           (resource
-             :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-faction-full database (read-string convocation) id)))))
-
 
       (GET "/v1/parliament/:convocation/factions" [convocation]
            (resource
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
                             (to-json (db/get-factions-full database (read-string convocation))))))
+
+      (GET "/v1/parliament/:convocation/factions/:id" [convocation id]
+           (resource
+             :available-media-types ["application/json"]
+             :handle-ok (fn [ctx]
+                            (to-json (db/get-faction-full database (read-string convocation) id)))))
+
+      (GET "/v1/parliament/:convocation/committees" [convocation]
+           (resource
+             :available-media-types ["application/json"]
+             :handle-ok (fn [ctx]
+                            (to-json (db/get-committees-full database (read-string convocation))))))
 
       (GET "/v1/parliament/:convocation/committees/:id" [convocation id]
            (resource
@@ -83,11 +90,7 @@
                             (to-json (db/get-committee-full database (read-string convocation) id)))))
 
 
-      (GET "/v1/parliament/:convocation/committees" [convocation]
-           (resource
-             :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-committees-full database (read-string convocation))))))
+
       )
 
     (def handler
@@ -98,7 +101,7 @@
     (let [server (jetty/run-jetty handler {:port port :join? false})]
       (assoc component :server server)))
   (stop [component]
-    (println ";; Stopping HTTP server")
+    (println (style ";; Stopping HTTP server" :green))
     (.stop server)
     component))
 

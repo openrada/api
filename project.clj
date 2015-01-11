@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [openrada/db "0.1.0-SNAPSHOT"]
                  [openrada/collector "0.1.0-SNAPSHOT"]
-                 [ring-server "0.3.1"]
+                 [ring-server "0.4.0"]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [compojure "1.3.1"]
                  [liberator "0.12.2"]
@@ -16,9 +16,10 @@
                  [buddy "0.2.3"]
                  [environ "1.0.0"]
                  [ring-cors "0.1.6"]
-                 [com.stuartsierra/component "0.2.2"]]
+                 [com.stuartsierra/component "0.2.2"]
+                 [clansi "1.0.0"]]
   :plugins [[lein-environ "1.0.0"]
-            [lein-ring "0.8.13"]]
+            [lein-ring "0.9.0"]]
   :profiles {
      :dev  {:env {
               :rethinkdb-host "127.0.0.1"}}}

@@ -7,6 +7,7 @@
             [environ.core :refer [env]]))
 
 
+
 (defn rada-system [config-options]
   (let [{:keys [rethinkdb-host port]} config-options]
     (-> (component/system-map
