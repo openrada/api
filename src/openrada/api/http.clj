@@ -44,6 +44,7 @@
 
       (GET "/v1/parliament/:convocation/members" [convocation]
            (resource
+             :allowed-methods [:get]
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
                             (to-json (db/get-members-full database (read-string convocation))))))
@@ -60,6 +61,7 @@
 
       (GET "/v1/parliament/:convocation/members/:id" [convocation id]
            (resource
+             :allowed-methods [:get]
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
                             (to-json (db/get-member-full database (read-string convocation) id)))))
@@ -67,24 +69,28 @@
 
       (GET "/v1/parliament/:convocation/factions" [convocation]
            (resource
+             :allowed-methods [:get]
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
                             (to-json (db/get-factions-full database (read-string convocation))))))
 
       (GET "/v1/parliament/:convocation/factions/:id" [convocation id]
            (resource
+             :allowed-methods [:get]
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
                             (to-json (db/get-faction-full database (read-string convocation) id)))))
 
       (GET "/v1/parliament/:convocation/committees" [convocation]
            (resource
+             :allowed-methods [:get]
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
                             (to-json (db/get-committees-full database (read-string convocation))))))
 
       (GET "/v1/parliament/:convocation/committees/:id" [convocation id]
            (resource
+             :allowed-methods [:get]
              :available-media-types ["application/json"]
              :handle-ok (fn [ctx]
                             (to-json (db/get-committee-full database (read-string convocation) id)))))
