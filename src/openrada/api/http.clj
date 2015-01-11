@@ -18,6 +18,9 @@
 
 
 
+(defn json-success [ctx]
+  (to-json (get ctx :result)))
+
 
 (defrecord HTTPServer [port database server]
   component/Lifecycle
@@ -46,8 +49,10 @@
            (resource
              :allowed-methods [:get]
              :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-members-full database (read-string convocation))))))
+             :malformed? (fn [_] (not (number? (read-string convocation))))
+             :exists? (fn [ctx]
+                        {:result (db/get-members-full database (read-string convocation))})
+             :handle-ok json-success))
 
       ;;;;
       ;; @api {get} /parliament/:convocation/members/:id Get full information for the specific parliament member.
@@ -63,37 +68,47 @@
            (resource
              :allowed-methods [:get]
              :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-member-full database (read-string convocation) id)))))
+             :malformed? (fn [_] (not (number? (read-string convocation))))
+             :exists? (fn [ctx]
+                        {:result (db/get-member-full database (read-string convocation) id)})
+             :handle-ok json-success))
 
 
       (GET "/v1/parliament/:convocation/factions" [convocation]
            (resource
              :allowed-methods [:get]
              :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-factions-full database (read-string convocation))))))
+             :malformed? (fn [_] (not (number? (read-string convocation))))
+             :exists? (fn [ctx]
+                        {:result (db/get-factions-full database (read-string convocation))})
+             :handle-ok json-success))
 
       (GET "/v1/parliament/:convocation/factions/:id" [convocation id]
            (resource
              :allowed-methods [:get]
              :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-faction-full database (read-string convocation) id)))))
+             :malformed? (fn [_] (not (number? (read-string convocation))))
+             :exists? (fn [ctx]
+                        {:result (db/get-faction-full database (read-string convocation) id)})
+             :handle-ok json-success))
 
       (GET "/v1/parliament/:convocation/committees" [convocation]
            (resource
              :allowed-methods [:get]
              :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-committees-full database (read-string convocation))))))
+             :malformed? (fn [_] (not (number? (read-string convocation))))
+             :exists? (fn [ctx]
+                        {:result (db/get-committees-full database (read-string convocation))})
+             :handle-ok json-success))
 
       (GET "/v1/parliament/:convocation/committees/:id" [convocation id]
            (resource
              :allowed-methods [:get]
              :available-media-types ["application/json"]
-             :handle-ok (fn [ctx]
-                            (to-json (db/get-committee-full database (read-string convocation) id)))))
+             :malformed? (fn [_] (not (number? (read-string convocation))))
+             :exists? (fn [ctx]
+                        {:result (db/get-committee-full database (read-string convocation) id)})
+             :handle-ok json-success))
 
 
 
