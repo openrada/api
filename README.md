@@ -2,7 +2,15 @@ api
 =========
 [![Dependencies Status](http://jarkeeper.com/openrada/api/status.svg)](http://jarkeeper.com/openrada/api)
 
-API component
+API component.
+
+## Documentation
+
+https://www.openrada.com/v1.0/docs
+
+## Live version
+
+https://api.openrada.com/
 
 
 ## License
