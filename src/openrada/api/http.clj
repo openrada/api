@@ -31,20 +31,6 @@
       (ANY "/" [] (resource))
 
 
-      ;;;;
-      ;; @api {get} /parliament/:convocation/members Get all members of the parliament from the specific convocation.
-      ;; @apiName GetMembers
-      ;; @apiGroup Members
-      ;; @apiParam {Number} convocation Parliament convocation. Current one is 8th.
-      ;; @apiExample {shell} Example usage:
-      ;;    curl -i https://api.openrada.com/v1/parliament/8/memebers
-      ;; @apiSuccess (200) {Object[]} members List of parliament members.
-      ;; @apiSuccess (200) {String} members.full_name Member's full name.
-      ;; @apiSuccess (200) {String} members.short_name Member's short name.
-      ;; @apiSuccess (200) {Date} members.dob Member's date of birth.
-      ;; @apiSuccess (200) {Date} members.member_since Date of becoiming a parliamnet member.
-      ;;;;
-
       (GET "/v1/parliament/:convocation/members" [convocation]
            (resource
              :allowed-methods [:get]
@@ -54,15 +40,6 @@
                         {:result (db/get-members-full database (read-string convocation))})
              :handle-ok json-success))
 
-      ;;;;
-      ;; @api {get} /parliament/:convocation/members/:id Get full information for the specific parliament member.
-      ;; @apiName GetMember
-      ;; @apiGroup Members
-      ;; @apiParam {Number} convocation Parliament convocation. Current one is 8th.
-      ;; @apiParam {Number} id Parliament member id.
-      ;; @apiExample {shell} Example usage:
-      ;;    curl -i https://api.openrada.com/v1/parliament/8/memebers/005ded9a-18c4-4f34-806c-80a82e9a7a26
-      ;;;;
 
       (GET "/v1/parliament/:convocation/members/:id" [convocation id]
            (resource
@@ -115,8 +92,8 @@
       )
 
     (def handler
-      (-> app
-          (wrap-cors :access-control-allow-origin #"https://api.openrada.com"
+      (-> (wrap-cors app
+                     :access-control-allow-origin #"https://api.openrada.com"
                      :access-control-allow-methods [:get])
           wrap-params))
     (let [server (jetty/run-jetty handler {:port port :join? false})]

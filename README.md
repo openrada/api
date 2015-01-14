@@ -12,6 +12,10 @@ https://www.openrada.com/v1.0/docs
 
 https://api.openrada.com/
 
+## Docker
+
+Docker image is available on the [Docker hub](https://registry.hub.docker.com/u/openrada/api/).
+
 
 ## License
 

@@ -12,7 +12,7 @@
                  [compojure "1.3.1"]
                  [liberator "0.12.2"]
                  [org.clojure/data.json "0.2.5"]
-                 [cuerdas "0.1.0"]
+                 [cuerdas "0.3.0"]
                  [buddy "0.2.3"]
                  [environ "1.0.0"]
                  [ring-cors "0.1.6"]
