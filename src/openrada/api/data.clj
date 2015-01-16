@@ -4,6 +4,7 @@
             [openrada.collector.members :as members-coll]
             [openrada.collector.committees :as committees-coll]
             [openrada.collector.factions :as factions-coll]
+            [openrada.collector.registrations :as registrations-coll]
             [clansi :refer [style]]))
 
 
@@ -82,6 +83,40 @@
     ))
 
 
+
+
+(defn update-member-registrations [db member all-regs]
+  (let [current-regs (db/get-registrations-for-member db (:id member))
+        regs-to-insert (remove (fn [reg]
+                                 (some (fn [curr-reg]
+                                         (and
+                                          (= (:type reg) (:type curr-reg))
+                                          (= (:reg_type reg) (:reg_type curr-reg))
+                                          (= (:date reg) (:date curr-reg)))
+                                         ) current-regs)
+                                 ) all-regs)
+        to-insert (map (fn [reg]
+                         (assoc reg :member_id (:id member))
+                         ) regs-to-insert)
+        ]
+    (db/save-registrations db to-insert)))
+
+(defn update-registrations [db convocation]
+  (let [members (db/get-members-from-convocation db convocation)]
+    (doall
+     (map (fn [member]
+            (let [online-regs (registrations-coll/parse-member-online-registrations
+                               (:online_registrations_link member))
+                  offline-regs (registrations-coll/parse-member-offline-registrations
+                               (:offline_registrations_link member))
+                  all-regs (concat online-regs offline-regs)
+                  ]
+              (update-member-registrations db member all-regs)
+              )
+            ) members))))
+
+
+
 (defn init [database]
   (println (style "init start" :green))
   ; members
@@ -95,6 +130,8 @@
   (seed-factions database 8)
   (update-members-with-faction database 8)
   (db/remove-field database "factions" "members")
+  ; registrations
+  (update-registrations database 8)
   (println (style "init finish" :green)))
 
 
