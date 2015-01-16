@@ -122,16 +122,20 @@
   ; members
   (seed-members database 8)
   (update-members-with-bios database 8)
+  (println (style "saved members" :green))
   ; committees
   (seed-committees database 8)
   (update-members-with-committee database 8)
   (db/remove-field database "committees" "members")
+  (println (style "saved committees" :green))
   ; factions
   (seed-factions database 8)
   (update-members-with-faction database 8)
   (db/remove-field database "factions" "members")
+  (println (style "saved factions" :green))
   ; registrations
   (update-registrations database 8)
+  (println (style "saved registrations" :green))
   (println (style "init finish" :green)))
 
 
