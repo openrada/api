@@ -50,6 +50,15 @@
                         {:result (db/get-member-full database (read-string convocation) id)})
              :handle-ok json-success))
 
+      (GET "/v1/parliament/:convocation/members/:id/registrations" [convocation id]
+           (resource
+             :allowed-methods [:get]
+             :available-media-types ["application/json"]
+             :malformed? (fn [_] (not (number? (read-string convocation))))
+             :exists? (fn [ctx]
+                        {:result (db/get-registrations-for-member
+                                  database (read-string convocation) id)})
+             :handle-ok json-success))
 
       (GET "/v1/parliament/:convocation/factions" [convocation]
            (resource
