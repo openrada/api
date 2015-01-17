@@ -18,7 +18,8 @@
                  [environ "1.0.0"]
                  [ring-cors "0.1.6"]
                  [com.stuartsierra/component "0.2.2"]
-                 [clansi "1.0.0"]]
+                 [clansi "1.0.0"]
+                 [clj-time "0.9.0"]]
   :plugins [[lein-environ "1.0.0"]
             [lein-ring "0.9.0"]]
   :profiles {
