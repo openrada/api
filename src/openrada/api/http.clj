@@ -103,13 +103,11 @@
 
       )
 
-    (def handler
-      (-> (wrap-cors app
-                     :access-control-allow-origin #"https://api.openrada.com"
-                     :access-control-allow-methods [:get])
-          wrap-params))
-    (let [server (jetty/run-jetty handler {:port port :join? false})]
-      (assoc component :server server)))
+    (let [handler
+          (-> app
+              wrap-params)
+          server (jetty/run-jetty handler {:port port :join? false})]
+          (assoc component :server server)))
   (stop [component]
     (println (style ";; Stopping HTTP server" :green))
     (.stop server)
