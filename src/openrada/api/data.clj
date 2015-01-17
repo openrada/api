@@ -52,8 +52,7 @@
                                                    })
                     ) (:members comm)))
 
-             ) committees))
-    ))
+             ) committees))))
 
 
 (defn seed-factions [db convocation]
@@ -78,14 +77,13 @@
                                                    })
 
                     ) (:members comm)))
-
-             ) factions))
-    ))
+             ) factions))))
 
 
 
 
 (defn update-member-registrations [db member all-regs]
+  (println "process member registrations" (:id member))
   (let [current-regs (db/get-registrations-for-member db (:id member))
         regs-to-insert (remove (fn [reg]
                                  (some (fn [curr-reg]
@@ -95,10 +93,8 @@
                                           (= (:date reg) (:date curr-reg)))
                                          ) current-regs)
                                  ) all-regs)
-        to-insert (map (fn [reg]
-                         (assoc reg :member_id (:id member))
-                         ) regs-to-insert)
-        ]
+        to-insert (doall (map  #(assoc % :member_id (:id member)) regs-to-insert))]
+    (println "insert registrations")
     (db/save-registrations db to-insert)))
 
 (defn update-registrations [db convocation]
@@ -144,12 +140,12 @@
   component/Lifecycle
 
   (start [this]
-    (println (style ";; Starting datacollector" :green))
+    (println (style ";; Starting data collector" :green))
       (init database)
       this)
 
   (stop [this]
-    (println (style ";; Stopping datacollector" :green))
+    (println (style ";; Stopping data collector" :green))
     this))
 
 
