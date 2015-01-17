@@ -21,7 +21,7 @@
 (defn json-success [ctx]
   (ring-response {:headers {"Access-Control-Allow-Origin" "https://api.openrada.com"
                             "Access-Control-Allow-Methods" "GET"}
-                  :body (to-json (get ctx :result))})
+                  :body (to-json (get ctx :result))}))
 
 
 
@@ -103,9 +103,7 @@
 
       )
 
-    (let [handler
-          (-> app
-              wrap-params)
+    (let [handler(wrap-params app)
           server (jetty/run-jetty handler {:port port :join? false})]
           (assoc component :server server)))
   (stop [component]
