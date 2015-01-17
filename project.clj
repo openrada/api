@@ -16,7 +16,6 @@
                  [cuerdas "0.3.0"]
                  [buddy "0.2.3"]
                  [environ "1.0.0"]
-                 [ring-cors "0.1.6"]
                  [com.stuartsierra/component "0.2.2"]
                  [clansi "1.0.0"]
                  [clj-time "0.9.0"]]

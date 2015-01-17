@@ -1,9 +1,8 @@
 (ns openrada.api.http
   (:require [com.stuartsierra.component :as component]
             [ring.adapter.jetty :as jetty]
-            [liberator.core :refer [resource defresource]]
+            [liberator.core :refer [resource defresource ring-response]]
             [ring.middleware.params :refer [wrap-params]]
-            [ring.middleware.cors :refer [wrap-cors]]
             [compojure.core :refer [defroutes ANY GET]]
             [openrada.db.core :as db]
             [openrada.api.data :as data]
@@ -19,7 +18,10 @@
 
 
 (defn json-success [ctx]
-  (to-json (get ctx :result)))
+  (ring-response {:headers {"Access-Control-Allow-Origin" "https://api.openrada.com"
+                            "Access-Control-Allow-Methods" "GET"}
+                  :body (to-json (get ctx :result))})
+
 
 
 (defrecord HTTPServer [port database server]
