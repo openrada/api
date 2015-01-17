@@ -123,10 +123,6 @@
             ) members))))
 
 
-
-(registrations-coll/parse-member-online-registrations
- "http://w1.c1.rada.gov.ua/pls/radan_gs09/ns_dep?vid=2&kod=248")
-
 (defn init [database]
   (println (style "init start" :green))
   ; members
