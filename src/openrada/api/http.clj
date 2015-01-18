@@ -20,7 +20,8 @@
 (defn json-success [ctx]
   (liberator.representation/ring-response
                  {:headers {"Access-Control-Allow-Origin" "https://api.openrada.com"
-                            "Access-Control-Allow-Methods" "GET"}
+                            "Access-Control-Allow-Methods" "GET"
+                            "Content-Type" "application/json;charset=utf-8"}
                   :body (to-json (get ctx :result))}))
 
 

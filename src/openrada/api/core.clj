@@ -24,6 +24,6 @@
 
 (def system (rada-system {:rethinkdb-host (env :rethinkdb-host) :port 3000}))
 
-
+;(alter-var-root #'system component/start)
 (defn -main [& args]
   (alter-var-root #'system component/start))
