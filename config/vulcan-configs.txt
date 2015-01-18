@@ -1,0 +1,9 @@
+# Upsert backend and add a server to it
+etcdctl set /vulcand/backends/api-b1/backend '{"Type": "http"}'
+etcdctl set /vulcand/backends/api-b1/servers/srv1 '{"URL": "http://localhost:3000"}'
+
+etcdctl set /vulcand/frontends/api-f1/frontend '{"Type": "http", "BackendId": "api-b1", "Route": Host("api.openrada.com") && PathRegexp("/.*")}'
+
+
+# vulcand logs
+docker logs $(docker ps | grep vulcand | awk '{ print $1 }')
