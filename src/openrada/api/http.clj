@@ -12,8 +12,9 @@
 
 
 (defn to-json [data]
-  (clojure.data.json/write-str data :escape-unicode false :escape-slash false))
-
+  (clojure.data.json/write-str data
+                               :escape-unicode false
+                               :escape-slash false))
 
 
 
@@ -23,7 +24,6 @@
                             "Access-Control-Allow-Methods" "GET"
                             "Content-Type" "application/json;charset=utf-8"}
                   :body (to-json (get ctx :result))}))
-
 
 
 (defrecord HTTPServer [port database server]
@@ -97,11 +97,7 @@
              :malformed? (fn [_] (not (number? (read-string convocation))))
              :exists? (fn [ctx]
                         {:result (db/get-committee-full database (read-string convocation) id)})
-             :handle-ok json-success))
-
-
-
-      )
+             :handle-ok json-success)))
 
     (let [handler(wrap-params app)
           server (jetty/run-jetty handler {:port port :join? false})]
