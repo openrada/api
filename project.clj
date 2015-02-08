@@ -20,7 +20,7 @@
                  [clansi "1.0.0"]
                  [clj-time "0.9.0"]]
   :plugins [[lein-environ "1.0.0"]
-            [lein-ring "0.9.0"]]
+            [lein-ring "0.9.1"]]
   :profiles {
      :dev  {:env {
               :rethinkdb-host "127.0.0.1"}}}
